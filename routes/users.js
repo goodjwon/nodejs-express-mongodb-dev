@@ -1,6 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const router = express.Router();
+
+// Load User Model
+require('../models/User');
+const User = mongoose.model('users');
+
 
 // User Login Route
 router.get('/login', (req, res) => {
@@ -10,6 +17,15 @@ router.get('/login', (req, res) => {
 // User Register Route
 router.get('/register', (req, res) => {
   res.render('users/register');
+});
+
+//Login Form POST
+router.post('/login', (req, res, next)=>{
+  passport.authenticate('local', {
+    successRedirect: '/ideas',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
 });
 
 //User Register
@@ -33,9 +49,36 @@ router.post('/register',(req, res)=>{
       password2: req.body.password2
     });
   } else {
-    res.send('passed');
-  }
-
+    User.findOne({email: req.body.email})
+      .then(user => {
+        if(user){
+          req.flash('error_msg', 'Email already registered');
+          res.redirect('/users/register');
+        }else{
+          const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+          });
+        
+          bcrypt.genSalt(10, (err, salt)=>{
+            bcrypt.hash(newUser.password, salt, (err, hash)=>{
+              if(err) throw err;
+              newUser.password = hash;
+              newUser.save()
+              .then(user=>{
+                req.flash('succes_msg', 'Yor are now registered and can log in');
+                res.redirect('/users/login');
+              })
+              .catch(err=>{
+                console.log(err);
+                return;
+              });
+            })
+          });
+        }
+      });
+    }
 })
 
 module.exports = router;

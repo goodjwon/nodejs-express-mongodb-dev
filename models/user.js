@@ -8,4 +8,4 @@ const UserSchema = new Schema({
     date:{type:Date, default:Date.now}
 });
 
-mongooe.model('users', IdeaSchema);
+mongooe.model('users', UserSchema);

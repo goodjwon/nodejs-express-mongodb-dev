@@ -1,5 +1,5 @@
-const mongooe =  require('mongoose');
-const Schema = mongooe.Schema;
+const mongoose =  require('mongoose');
+const Schema = mongoose.Schema;
 
 const IdeaSchema = new Schema({
     title:{type:String, required:true},
@@ -7,4 +7,4 @@ const IdeaSchema = new Schema({
     date:{type:Date, default:Date.now}
 });
 
-mongooe.model('ideas', IdeaSchema);
+mongoose.model('ideas', IdeaSchema);
