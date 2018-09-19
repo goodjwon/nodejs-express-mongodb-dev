@@ -11,16 +11,13 @@ module.exports = function(passport){
         User.findOne({
             email:email
         }).then(user => {
-            console.log('is ok?')
             if(!user){
                 return done(null, false, {message: 'No User Found'});
             }
-
             // Match password
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if(err) throw err;
                 if(isMatch){
-                    consoel.log('matched')
                     return done(null, user);
                 } else {
                     return done(null, false, {message: 'Password Incorrect'});
