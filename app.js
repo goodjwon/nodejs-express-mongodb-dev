@@ -20,7 +20,7 @@ require('./config/passport')(passport);
 // Map global promise - get rid of warning
 mongoose.Promise = global.Promise;
 // Connect to mongoose
-mongoose.connect('mongodb://localhost/vidjot-dev', {
+mongoose.connect('mongodb://localhost/goodjwon', {
     useNewUrlParser: true
 })
     .then(() => console.log('MongoDB Connected...'))
