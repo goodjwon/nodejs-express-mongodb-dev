@@ -20,6 +20,13 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+#config
+./config/*
+config/database.js
+*database.js
+*.js
+
+
 # PyDev specific (Python IDE for Eclipse)
 *.pydevproject
 
@@ -173,6 +180,8 @@ gradle-app.setting
 
 # osx
 .DS_Store
+
+
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
